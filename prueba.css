@@ -1,0 +1,104 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    height: 100%;
+}
+:root {
+  --fondo:#E4EBF0; 
+  --letra:Inter;
+}
+
+.container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh;
+    /* background: var(--fondo); */
+    /* background: var(--fondo);; */
+}
+/* .container h1{
+  position: relative;
+  font-family: var(--letra);
+  top: 200px;
+  font-size: 50px;
+  margin-left: 300px;
+} */
+
+.login-container {
+  font-family: var(--letra);
+    width: 500px;
+    /* margin-left: 300px; */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group-user {
+    margin-bottom: 15px;
+}
+
+.form-group-user label {
+    margin-bottom: 5px;
+}
+
+.form-group-user input {
+    width: 80%;
+    /* margin-top: 100px; */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+.form-group-pass {
+    margin-bottom: 15px;
+}
+
+.form-group-pass label {
+    margin-bottom: 5px;
+}
+
+.form-group-pass input {
+    width: 80%;
+    /* margin-top: 100px; */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+
+button {
+    width: 20%;
+    margin-top: 100px;
+    padding: 10px;
+    background-color: #8AB3CF;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.background-image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    background-image: url('image/Recurso\ 1.svg');
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+  
+}
+
+
