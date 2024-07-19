@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+body{
+    margin: 0;
+    background-image: linear-gradient(to top, #4180ab, #4587b4, #498ebd, #4d95c6, #519ccf, #61a5d5, #70aeda, #7fb7e0, #99c4e4, #b3d1e8, #cbdeec, #e4ebf0);
+    overflow-x: hidden;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+}
+:root{
+    --letra:'Poppins', sans-serif;
+    --btn-color:#BDD1DE;
+    --btn-color-select:#4180AB;
+    --color-letra:#000;
+    --color-blanco:#ffff;
+    --color-contenido:#D0EBF4;
+}
+.cja-logo{
+    display: flex;
+    align-items: center;
+    font-family: var(--letra);
+    width: 27%;
+    margin-left: 80px;
+}
+.cja-logo img{
+    width: 150px;
+    margin: 30px;
+}
+.btn-salir {
+    position: absolute;
+    top: 50px;
+    right: 50px;
+}
+.btn-salir button{
+    width: 80px;
+    height: 50px;
+    background-color: var(--btn-color-select);
+    border-radius: 10px;
+    border: none;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    
+}
+.btn-salir button i.fa-solid{
+    font-size: 35px;
+}
+
+.cja-categoria {
+    position: relative;
+    width: 20%;
+    height: 30%;
+    margin: 5%;
+}
+.cja-categoria button{
+    margin: 10%;
+    display: block;
+    height: 50px;
+    width: 300px;
+    font-size: 20px;
+    border-radius: 20px;
+    background-color: var(--btn-color);
+    border: none;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.2);
+    font-family: var(--letra);
+    &:hover{
+        background-color: var(--btn-color-select);
+    }
+}
+
+.cja-contenido{
+    position: relative;
+    width: 70%;
+    top: -20px;
+    left: 500px;
+    top: -700px;
+    font-family: var(--letra);
+}
+.cja-hija-contenido{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 5%;
+    background-color: var(--color-blanco);
+}
+
+.cja-hija-contenido {
+    
+}
+.cja-tabla{
+    width: 100%;
+    border-collapse: collapse;
+    margin: 5%;
+    background-color: var(--color-contenido);
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.2);
+}
+
+
+
+  
+
+
