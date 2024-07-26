@@ -79,20 +79,17 @@ body{
     font-family: var(--letra);
 }
 .cja-hija-contenido{
-    display: flex;
+    display: block;
     flex-wrap: wrap;
     justify-content: space-around;
     margin: 5%;
     background-color: var(--color-blanco);
 }
 
-.cja-hija-contenido {
-    
-}
 .cja-tabla{
     width: 100%;
     border-collapse: collapse;
-    margin: 5%;
+    margin-top: 2%;
     background-color: var(--color-contenido);
     border-radius: 10px;
     box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.2);
