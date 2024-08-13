@@ -8,61 +8,66 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />    
-    
-    
+</head>
 <body>
-    <div class="cja-logo">
-        <img  class="img-logo" src="/Imagenes/logo_login.svg">
-        <h1>Papelería</h1>
-    </div>
-
-    <div class="btn-salir">
-        <button><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
-    </div>
-
-    <div class="cja-categoria">
-        <button onclick="location.href='/inicio/pedido.html'"><i class="fa-solid fa-cart-shopping"></i> Pedido</button>
-        <button onclick="location.href='/inicio/clientes.html'"><i class="fa-solid fa-user-group "></i>Clientes</button>
-        <button onclick="location.href='/inicio/proveedor.html'"><i class="fa-solid fa-user-tie "></i>Proveedor</button>
-        <button onclick="location.href='/inicio/producto.html'"><i class="fa-solid fa-box-open "></i>Producto</button>
-        <button onclick="location.href='/inicio/venta.html'"><i class="fa-regular fa-clipboard "></i>Ventas</button>
-        <button onclick="location.href='/inicio/tienda.html'"><i class="fa-solid fa-store "></i>Tienda</button>
-    </div>
-
-    <div class="cja-contenido">
-        <h1>Datos del Cliente</h1>
-        <div class="cja-hija-contenido">
-            <div class="cja-formulario">
-                <input type="text" placeholder="Documento">
-                <input type="text" placeholder="Nombre">
-                <input type="number" placeholder="Telefono">
-                <input type="text" placeholder="Dirección">
-                <input type="text" placeholder="Correo">
-                <button><i class="fa-solid fa-floppy-disk"></i></button>
-                <button><i class="fa-solid fa-trash"></i></button>
-                <button><i class="fa-regular fa-pen-to-square"></i></button>
-                <button><i class="fa-regular fa-file"></i></button>
-            </div>
-            <div class="cja-tabla">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Documento</th>
-                            <th>Nombre</th>
-                            <th>Teléfono</th>
-                            <th>Dirección</th>
-                            <th>Correo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            
-                        </tr>
-                    </tbody>
-                </table>
-            </div>               
+    <header>
+        <div class="cja-logo">
+            <img  class="img-logo" src="/Imagenes/logo_login.svg" alt="Logo Papelería">
+            <h1>Papelería</h1>
         </div>
-    </div>
-    
+        <div class="btn-salir">
+            <button aria-label="Salir"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
+        </div>
+    </header>
+
+    <nav class="cja-categoria">
+        <button onclick="location.href='/inicio/pedido.html'"><i class="fa-solid fa-cart-shopping"></i> Pedido</button>
+        <button onclick="location.href='/inicio/clientes.html'"><i class="fa-solid fa-user-group"></i> Clientes</button>
+        <button onclick="location.href='/inicio/proveedor.html'"><i class="fa-solid fa-user-tie"></i> Proveedor</button>
+        <button onclick="location.href='/inicio/producto.html'"><i class="fa-solid fa-box-open"></i> Producto</button>
+        <button onclick="location.href='/inicio/venta.html'"><i class="fa-regular fa-clipboard"></i> Ventas</button>
+        <button onclick="location.href='/inicio/tienda.html'"><i class="fa-solid fa-store"></i> Tienda</button>
+    </nav>
+
+    <main>
+        <section class="cja-contenido">
+            <h2>Datos del Cliente</h2>
+            <div class="cja-hija-contenido">
+                <article class="cja-formulario">
+                    <input type="number" placeholder="Documento" aria-label="Documento">
+                    <input type="text" placeholder="Nombre" aria-label="Nombre">
+                    <input type="number" placeholder="Teléfono" aria-label="Teléfono">
+                    <input type="text" placeholder="Dirección" aria-label="Dirección">
+                    <input type="text" placeholder="Correo" aria-label="Correo">
+                    <button aria-label="Guardar"><i class="fa-solid fa-floppy-disk"></i></button>
+                    <button aria-label="Eliminar"><i class="fa-solid fa-trash"></i></button>
+                    <button aria-label="Editar"><i class="fa-regular fa-pen-to-square"></i></button>
+                    <button aria-label="Nuevo Documento"><i class="fa-regular fa-file"></i></button>
+                </article>
+                <aside class="cja-tabla">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Documento</th>
+                                <th>Nombre</th>
+                                <th>Teléfono</th>
+                                <th>Dirección</th>
+                                <th>Correo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <!-- Datos de ejemplo -->
+                            </tr>
+                        </tbody>
+                    </table>
+                </aside>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Papelería. Todos los derechos reservados.</p>
+    </footer>
 </body>
 </html>

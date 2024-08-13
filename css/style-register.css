@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+body {
+    margin: 0;
+    background-image: linear-gradient(to top, #4180ab, #4587b4, #498ebd, #4d95c6, #519ccf, #61a5d5, #70aeda, #7fb7e0, #99c4e4, #b3d1e8, #cbdeec, #e4ebf0);
+    overflow-x: hidden;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+:root {
+    --letra: 'Poppins', sans-serif;
+    --btn-color: #BDD1DE;
+    --btn-color-select: #4180AB;
+    --color-letra: #000;
+    --color-blanco: #fff;
+    --color-contenido: #D0EBF4;
+}
+
+.registro-container {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    max-width: 400px;
+    width: 100%;
+}
+
+.cja-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.cja-logo img {
+    width: 80px;
+    margin-right: 20px;
+}
+
+.cja-logo h1 {
+    font-size: 24px;
+    color: var(--color-letra);
+}
+
+.registro-formulario {
+    display: flex;
+    flex-direction: column;
+}
+
+.registro-formulario input[type="text"],
+.registro-formulario input[type="email"],
+.registro-formulario input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 2px solid var(--btn-color-select);
+    border-radius: 8px;
+    background-color: var(--color-blanco);
+    font-family: var(--letra);
+    font-size: 16px;
+    color: var(--color-letra);
+    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+.registro-formulario input:focus {
+    border-color: var(--btn-color);
+    outline: none;
+    box-shadow: 0px 0px 10px 0px rgba(65, 128, 171, 0.5);
+}
+
+.registro-formulario button {
+    padding: 12px;
+    margin: 20px 0 0 0;
+    border: 2px solid var(--btn-color-select);
+    border-radius: 8px;
+    background-color: var(--btn-color);
+    color: var(--color-letra);
+    font-family: var(--letra);
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, transform 0.2s ease;
+    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
+}
+
+.registro-formulario button:hover {
+    background-color: var(--btn-color-select);
+    color: var(--color-blanco);
+    transform: translateY(-2px);
+}
+
+.registro-formulario button:active {
+    transform: translateY(0px);
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.registro-formulario button i {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+/* Media Queries para pantallas pequeñas */
+@media only screen and (max-width: 600px) {
+    .registro-container {
+        padding: 20px;
+        max-width: 300px;
+    }
+
+    .cja-logo img {
+        width: 60px;
+        margin-right: 10px;
+    }
+
+    .cja-logo h1 {
+        font-size: 20px;
+    }
+
+    .registro-formulario input[type="text"],
+    .registro-formulario input[type="email"],
+    .registro-formulario input[type="password"] {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .registro-formulario button {
+        font-size: 16px;
+    }
+}
