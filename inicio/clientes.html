@@ -16,7 +16,7 @@
             <h1>Papelería</h1>
         </div>
         <div class="btn-salir">
-            <button aria-label="Salir"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
+            <button class="submit" aria-label="Salir"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
         </div>
     </header>
 
@@ -26,7 +26,6 @@
         <button onclick="location.href='/inicio/proveedor.html'"><i class="fa-solid fa-user-tie"></i> Proveedor</button>
         <button onclick="location.href='/inicio/producto.html'"><i class="fa-solid fa-box-open"></i> Producto</button>
         <button onclick="location.href='/inicio/venta.html'"><i class="fa-regular fa-clipboard"></i> Ventas</button>
-        <button onclick="location.href='/inicio/tienda.html'"><i class="fa-solid fa-store"></i> Tienda</button>
     </nav>
 
     <main>
@@ -34,13 +33,15 @@
             <h2>Datos del Cliente</h2>
             <div class="cja-hija-contenido">
                 <article class="cja-formulario">
-                    <input type="number" id="document" placeholder="Documento" aria-label="Documento">
-                    <input type="text" id="name" placeholder="Nombre" aria-label="Nombre">
-                    <input type="number" id="number" placeholder="Teléfono" aria-label="Teléfono">
-                    <input type="text" id="addres" placeholder="Dirección" aria-label="Dirección">
-                    <input type="text" id="email" placeholder="Correo" aria-label="Correo">
-                    <button aria-label="Guardar" id="guardar"><i class="fa-solid fa-floppy-disk"></i></button>
-                    <button aria-label="Nuevo Documento" id="new"><i class="fa-regular fa-file"></i></button>
+                    <form action="">
+                    <input type="number" id="document" placeholder="Documento" aria-label="Documento" required="" >
+                    <input type="text" id="name" placeholder="Nombre" aria-label="Nombre" required="">
+                    <input type="number" id="number" placeholder="Teléfono" aria-label="Teléfono" required="">
+                    <input type="text" id="addres" placeholder="Dirección" aria-label="Dirección" required="">
+                    <input type="email" id="email" placeholder="Correo" aria-label="Correo" required="">
+                    <button class="submit" aria-label="Guardar" id="guardar"><i class="fa-solid fa-floppy-disk"></i></button>
+                    <button class="submit" aria-label="Nuevo Documento" id="new"><i class="fa-regular fa-file"></i></button>
+                </form>    
                 </article>
                 <aside class="cja-tabla">
                     <table>
@@ -55,7 +56,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <!-- Datos de ejemplo -->
+
                             </tr>
                         </tbody>
                     </table>
@@ -67,6 +68,6 @@
     <footer>
         <p>&copy; 2024 Papelería. Todos los derechos reservados.</p>
     </footer>
-    <script src="/js/modulos/clientes.js"></script>
+    <script type="module" src="js/modulos/clientes.js"></script>
 </body>
 </html>

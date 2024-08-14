@@ -1,30 +1,38 @@
-import isEmail from './isEmail.js';
-import is_valid from './is_valid.js';
-
 document.addEventListener('DOMContentLoaded', () => {
     const loginButton = document.getElementById('login-button');
     
     loginButton.addEventListener('click', (e) => {
-        e.preventDefault(); // Evita el comportamiento por defecto del botón
+        e.preventDefault();
 
         const correo = document.getElementById('user');
         const password = document.getElementById('pass');
 
-        // Verifica si los campos están vacíos o si el email es inválido
-        if (!is_valid(e, '#user, #pass') || !isEmail(e, correo)) {
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!correo.value.trim() || !password.value.trim()) {
             alert('Por favor, complete todos los campos correctamente.');
             return;
         }
 
-        // Verifica las credenciales con la API
+        if (!emailPattern.test(correo.value)) {
+            alert('Por favor, ingrese un correo electrónico válido.');
+            return;
+        }
+
         fetch(`http://localhost:3000/usuarios?correo=${encodeURIComponent(correo.value)}`)
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error en la solicitud al servidor');
+                }
+                return response.json();
+            })
             .then(data => {
+                console.log('Datos recibidos:', data); 
+
                 if (data.length > 0 && data[0].contraseña === password.value) {
                     alert('Has ingresado satisfactoriamente.');
-                    window.location.href = '/inicio/pedido.html';
+                    window.location.href ='/inicio/pedido.html';
                 } else {
-                    alert('Credenciales incorrectas.');
+                    alert('Correo o contraseña incorrecta.');
                 }
             })
             .catch(error => {

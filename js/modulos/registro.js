@@ -11,14 +11,6 @@ document.getElementById('registro-formulario').addEventListener('submit', functi
     }
     const verificarRegistro = async () => {
         try {
-            const responseNombre = await fetch(`http://localhost:3000/usuarios?nombre=${encodeURIComponent(nombre)}`);
-            const usuariosPorNombre = await responseNombre.json();
-            
-            if (usuariosPorNombre.length > 0) {
-                alert("El nombre de usuario ya está registrado.");
-                return false;
-            }
-
             const responseCorreo = await fetch(`http://localhost:3000/usuarios?correo=${encodeURIComponent(correo)}`);
             const usuariosPorCorreo = await responseCorreo.json();
 

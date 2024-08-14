@@ -1,21 +1,30 @@
-import { URL } from "../config.js";
+import { URL } from "../config.js";  
 
-const solicitud = async (endpoint) => {
+export const solicitud = async (endpoint) => {
   try {
-    let solicitud = await fetch(`${URL}/${endpoint}`);
-    let data = await solicitud.json();
+    const response = await fetch(`${URL}/${endpoint}`);
+    if (!response.ok) {
+      throw new Error(`Error en la solicitud: ${response.statusText}`);
+    }
+    const data = await response.json();
     return data;
   } catch (error) {
-    return error;
+    console.error("Error al realizar la solicitud:", error);
+    throw error;
   }
 };
 
 export const enviar = async (endpoint, options) => {
   try {
-    let solicitud = await fetch(`${URL}/${endpoint}`, options);
-    let data = await solicitud.json();
+    const response = await fetch(`${URL}/${endpoint}`, options);
+    if (!response.ok) {
+      throw new Error(`Error al enviar los datos: ${response.statusText}`);
+    }
+    const data = await response.json();
     return data;
   } catch (error) {
-    return error;
+    console.error("Error al enviar datos:", error);
+    throw error;
   }
 };
+

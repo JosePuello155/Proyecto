@@ -7,26 +7,20 @@ import isEmail from './is_email.js';
 
 const dom = document;
 
-// Cargar clientes al iniciar
 document.addEventListener('DOMContentLoaded', () => {
-  loadClients();
+  cargar();
 
-  // Eventos para validaciones
   dom.getElementById('document').addEventListener('input', (e) => remover(e, e.target));
   dom.getElementById('name').addEventListener('input', (e) => remover(e, e.target));
   dom.getElementById('number').addEventListener('keypress', is_number);
   dom.getElementById('name').addEventListener('keypress', is_letters);
   dom.getElementById('email').addEventListener('input', (e) => isEmail(e, e.target));
-
-  // Evento para guardar o actualizar cliente
-  dom.getElementById('guardar').addEventListener('click', saveClient);
-
-  // Evento para limpiar el formulario
-  dom.getElementById('new').addEventListener('click', clearForm);
+  dom.getElementById('guardar').addEventListener('click', guardar);
+  dom.getElementById('new').addEventListener('click', limpiar);
+  dom.getElementById('btn-salir').addEventListener('click', salir);
 });
 
-// Función para cargar los clientes en la tabla
-const loadClients = async () => {
+const cargar = async () => {
   const data = await solicitud('clientes');
   const tableBody = dom.querySelector('tbody');
   tableBody.innerHTML = '';
@@ -49,7 +43,6 @@ const loadClients = async () => {
     tableBody.appendChild(row);
   });
 
-  // Eventos para editar y eliminar
   dom.querySelectorAll('.edit-btn').forEach(button => {
     button.addEventListener('click', editClient);
   });
@@ -59,8 +52,7 @@ const loadClients = async () => {
   });
 };
 
-// Función para guardar o actualizar cliente
-const saveClient = async (e) => {
+const guardar = async (e) => {
   e.preventDefault();
 
   const isValid = is_valid(e, 'input');
@@ -77,7 +69,6 @@ const saveClient = async (e) => {
   const id = dom.getElementById('guardar').dataset.id;
 
   if (id) {
-    // Si hay un ID, actualiza el cliente existente
     await enviar(`clientes/${id}`, {
       method: 'PUT',
       headers: {
@@ -86,7 +77,6 @@ const saveClient = async (e) => {
       body: JSON.stringify(cliente)
     });
   } else {
-    // Si no hay ID, crea un nuevo cliente
     await enviar('clientes', {
       method: 'POST',
       headers: {
@@ -96,16 +86,13 @@ const saveClient = async (e) => {
     });
   }
 
-  loadClients();
-  clearForm();
+  cargar();
+  limpiar();
 };
 
-// Función para editar un cliente
 const editClient = async (e) => {
   const id = e.currentTarget.dataset.id;
-
   const cliente = await solicitud(`clientes/${id}`);
-
   dom.getElementById('document').value = cliente.documento;
   dom.getElementById('name').value = cliente.nombre;
   dom.getElementById('number').value = cliente.telefono;
@@ -115,19 +102,20 @@ const editClient = async (e) => {
   dom.getElementById('guardar').dataset.id = cliente.id;
 };
 
-// Función para eliminar un cliente
 const deleteClient = async (e) => {
   const id = e.currentTarget.dataset.id;
-
-  await enviar(`clientes/${id}`, {
-    method: 'DELETE'
-  });
-
-  loadClients();
+  if (confirm('¿Estás seguro de que deseas eliminar este cliente?')) {
+    await enviar(`clientes/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    cargar();
+  }
 };
 
-// Función para limpiar el formulario
-const clearForm = () => {
+const limpiar = () => {
   dom.getElementById('document').value = '';
   dom.getElementById('name').value = '';
   dom.getElementById('number').value = '';
@@ -137,3 +125,8 @@ const clearForm = () => {
   dom.getElementById('guardar').dataset.id = '';
 };
 
+const salir = () => {
+  if (confirm('¿Estás seguro de que deseas salir?')) {
+    window.location.href = '/index.html';  
+  }
+};

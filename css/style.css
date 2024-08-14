@@ -177,18 +177,18 @@ input[type="text"]:focus, input[type="number"]:focus, input[type="email"]:focus 
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 .cja-tabla th{
-    width: ;
-    padding: 12px 15px;  /* Espacio interno de las celdas */
-    text-align: left;    /* Alineación del texto */
-    background-color: #f2f2f2; /* Color de fondo */
-    border-bottom: 2px solid #ccc; /* Línea inferior */
-    font-size: 16px; /* Tamaño de la fuente */
+    
+    padding: 12px 15px 20px 30px;  
+    text-align: left;    
+    background-color: #f2f2f2; 
+    border-bottom: 2px solid #ccc; 
+    font-size: 16px; 
 }
 
 /* Estilos responsivos */
 
-/* Pantallas pequeñas (móviles) */
-@media only screen and (max-width: 600px) {
+
+@media (max-width: 600px) {
     .cja-logo {
         width: 100%;
         margin-left: 0;
@@ -238,8 +238,8 @@ input[type="text"]:focus, input[type="number"]:focus, input[type="email"]:focus 
     }
 }
 
-/* Pantallas medianas (tabletas) */
-@media only screen and (min-width: 601px) and (max-width: 1024px) {
+
+@media  (min-width: 601px) and (max-width: 1024px) {
     .cja-logo {
         width: 50%;
         margin-left: 0;
@@ -283,8 +283,7 @@ input[type="text"]:focus, input[type="number"]:focus, input[type="email"]:focus 
     }
 }
 
-/* Pantallas grandes (escritorios) */
-@media only screen and (min-width: 1025px) {
+@media (min-width: 1025px) {
     .cja-logo {
         width: 30%;
         margin-left: 50px;
