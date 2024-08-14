@@ -34,15 +34,13 @@
             <h2>Datos del Cliente</h2>
             <div class="cja-hija-contenido">
                 <article class="cja-formulario">
-                    <input type="number" placeholder="Documento" aria-label="Documento">
-                    <input type="text" placeholder="Nombre" aria-label="Nombre">
-                    <input type="number" placeholder="Teléfono" aria-label="Teléfono">
-                    <input type="text" placeholder="Dirección" aria-label="Dirección">
-                    <input type="text" placeholder="Correo" aria-label="Correo">
-                    <button aria-label="Guardar"><i class="fa-solid fa-floppy-disk"></i></button>
-                    <button aria-label="Eliminar"><i class="fa-solid fa-trash"></i></button>
-                    <button aria-label="Editar"><i class="fa-regular fa-pen-to-square"></i></button>
-                    <button aria-label="Nuevo Documento"><i class="fa-regular fa-file"></i></button>
+                    <input type="number" id="document" placeholder="Documento" aria-label="Documento">
+                    <input type="text" id="name" placeholder="Nombre" aria-label="Nombre">
+                    <input type="number" id="number" placeholder="Teléfono" aria-label="Teléfono">
+                    <input type="text" id="addres" placeholder="Dirección" aria-label="Dirección">
+                    <input type="text" id="email" placeholder="Correo" aria-label="Correo">
+                    <button aria-label="Guardar" id="guardar"><i class="fa-solid fa-floppy-disk"></i></button>
+                    <button aria-label="Nuevo Documento" id="new"><i class="fa-regular fa-file"></i></button>
                 </article>
                 <aside class="cja-tabla">
                     <table>
@@ -69,5 +67,6 @@
     <footer>
         <p>&copy; 2024 Papelería. Todos los derechos reservados.</p>
     </footer>
+    <script src="/js/modulos/clientes.js"></script>
 </body>
 </html>

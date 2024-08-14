@@ -4,7 +4,6 @@ body {
     margin: 0;
     background-image: linear-gradient(to top, #4180ab, #4587b4, #498ebd, #4d95c6, #519ccf, #61a5d5, #70aeda, #7fb7e0, #99c4e4, #b3d1e8, #cbdeec, #e4ebf0);
     overflow-x: hidden;
-    background-attachment: fixed;
     background-size: cover;
     background-position: center;
     font-family: 'Poppins', sans-serif;

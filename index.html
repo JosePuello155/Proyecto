@@ -6,7 +6,7 @@
   <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet" />
   <title>Document</title>
-  <link rel="stylesheet" href="/css/style-login.css">
+  <link rel="stylesheet" href="style-login.css">
   <link rel="icon" type="image/svg" sizes="32*32" href="/Imagenes/logo_login.svg"  >
 </head>
 <body>
@@ -17,7 +17,7 @@
             <div class="input-box">
               <header>INICIAR SESIÓN</header>
               <div class="input-field">
-                <input type="text" class="input" id="user" required="" autocomplete="off">
+                <input type="email" class="input" id="user" required="" autocomplete="off">
                 <label for="user">Usuario</label>
               </div>
               <div class="input-field">
@@ -25,7 +25,7 @@
                 <label for="pass">Contraseña</label>
               </div>
               <div class="input-field">
-                <button class="submit" onclick="location.href='/inicio/pedido.html'">ENTRAR</button>
+                <button class="submit" id="login-button">ENTRAR</button>
                 <button class="submit" onclick="location.href='/registro.html'">REGISTRARSE</button>
               </div>
           
@@ -36,12 +36,11 @@
               <img class="imag" src="/Imagenes/logo_login.svg" alt="">
               <p>Papelería</p>
             </div>
-          
           </div>
         </div>
       </div>
     </div>
-
   </div>
+  <script src="js/modulos/login.js"></script>
 </body>
 </html>
