@@ -1,75 +1,78 @@
-document.getElementById("guardar").addEventListener("click", function() {
-  // Obtener los valores de los campos
-  const documentNumber = document.getElementById("document").value.trim();
-  const name = document.getElementById("name").value.trim();
-  const phoneNumber = document.getElementById("number").value.trim();
-  const address = document.getElementById("addres").value.trim();
-  const email = document.getElementById("email").value.trim();
+import isEmail from './is_email.js';
+import is_letters from './is_letters.js';
+import is_number from './is_number.js';
+import is_valid from './is_valid.js';
 
-  // Array para almacenar errores de validación
-  let errors = [];
+const dom = document;
 
-  // Validaciones
-  if (!documentNumber || isNaN(documentNumber)) {
-      errors.push("Número de documento es requerido y debe ser un número.");
-  }
+// Selecciona el formulario y los elementos necesarios
+const form = dom.getElementById('registro-formulario');
+const documentInput = dom.getElementById('document');
+const nameInput = dom.getElementById('name');
+const numberInput = dom.getElementById('number');
+const addressInput = dom.getElementById('addres');
+const emailInput = dom.getElementById('email');
+const guardarBtn = dom.getElementById('guardar');
+const newBtn = dom.getElementById('new');
+const salirBtn = dom.getElementById('btn-salir');
 
-  if (!name) {
-      errors.push("El nombre es requerido.");
-  }
+// Asociar validaciones en tiempo real
+nameInput.addEventListener('input', is_letters);
+documentInput.addEventListener('input', is_number);
+numberInput.addEventListener('input', is_number);
+emailInput.addEventListener('input', () => isEmail(null, emailInput));
 
-  if (!phoneNumber || isNaN(phoneNumber)) {
-      errors.push("El teléfono es requerido y debe ser un número.");
-  }
+// Manejar la acción de guardar
+guardarBtn.addEventListener('click', (event) => {
+    event.preventDefault(); // Evita el envío del formulario por defecto
 
-  if (!address) {
-      errors.push("La dirección es requerida.");
-  }
+    // Validar el formulario antes de enviar
+    const formValid = is_valid(event, 'input');
+    if (formValid) {
+        const cliente = {
+            document: documentInput.value,
+            name: nameInput.value,
+            number: numberInput.value,
+            addres: addressInput.value,
+            email: emailInput.value
+        };
 
-  if (!email || !validateEmail(email)) {
-      errors.push("El correo electrónico es requerido y debe ser válido.");
-  }
-
-  // Mostrar errores si los hay
-  if (errors.length > 0) {
-      alert("Errores:\n" + errors.join("\n"));
-  } else {
-      // Si no hay errores, enviamos los datos al servidor JSON
-      const formData = {
-          document: documentNumber,
-          name: name,
-          number: phoneNumber,
-          addres: address,
-          email: email
-      };
-
-      saveDataToJsonServer(formData);
-  }
+        // Enviar los datos a JSON Server
+        fetch('http://localhost:3000/clientes', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(cliente)
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert('Cliente registrado con éxito');
+            form.reset(); // Limpiar el formulario después del registro
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.classList.remove('error', 'correcto'); // Limpia las clases de validación
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Hubo un problema al registrar el cliente');
+        });
+    } else {
+        alert('Por favor, completa todos los campos correctamente.');
+    }
 });
 
-// Función para validar el formato del email
-function validateEmail(email) {
-  const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  return re.test(email);
-}
+// Manejar la acción de "Nuevo" (limpiar el formulario)
+newBtn.addEventListener('click', () => {
+    form.reset();
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach(input => {
+        input.classList.remove('error', 'correcto'); // Limpia las clases de validación
+    });
+});
 
-// Función para guardar los datos en el servidor JSON
-function saveDataToJsonServer(data) {
-  fetch('http://localhost:3000/clientes', {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-  })
-  .then(response => response.json())
-  .then(data => {
-      alert('Datos guardados exitosamente');
-      // Resetear el formulario
-      document.getElementById("registro-formulario").reset();
-  })
-  .catch(error => {
-      console.error('Error:', error);
-      alert('Hubo un problema al guardar los datos.');
-  });
-}
+// Manejar la acción de "Salir"
+salirBtn.addEventListener('click', () => {
+    window.location.href = '/inicio'; // Redirige a la página de inicio
+});
