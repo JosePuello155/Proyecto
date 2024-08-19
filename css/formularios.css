@@ -1,0 +1,98 @@
+/* Fondo del cuerpo con un degradado */
+body {
+    background-image: linear-gradient(to top, #4180ab, #4587b4, #498ebd, #4d95c6, #519ccf, #61a5d5, #70aeda, #7fb7e0, #99c4e4, #b3d1e8, #cbdeec, #e4ebf0);
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Contenedor del formulario */
+.form-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 20px;
+    padding: 20px;
+    background-color: #f4f9fc; /* Un color más claro para contraste */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    opacity: 0.95;
+}
+
+/* Título del formulario */
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Estilos para los grupos de formularios */
+.form-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+    width: 100%;
+    max-width: 400px; /* Asegura que las etiquetas no se extiendan demasiado */
+    text-align: left;
+}
+
+.form-group input {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    font-size: 16px; 
+    box-sizing: border-box; 
+}
+
+/* Estilos para los botones */
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.form-actions button {
+    flex: 1; 
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    margin: 0 5px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.form-actions button:hover {
+    background-color: #0056b3;
+}
+
+/* Media queries para pantallas pequeñas */
+@media (max-width: 480px) {
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-actions button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .form-actions button:last-child {
+        margin-bottom: 0;
+    }
+}

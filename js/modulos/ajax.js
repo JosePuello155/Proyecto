@@ -1,4 +1,4 @@
-import { URL } from "../config.js";  
+import { URL } from "./config.js";  
 
 export const solicitud = async (endpoint) => {
   try {
@@ -9,7 +9,7 @@ export const solicitud = async (endpoint) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Error al realizar la solicitud:", error);
+    console.error("Error al realizar la solicitud:", error.message);
     throw error;
   }
 };
@@ -28,3 +28,4 @@ export const enviar = async (endpoint, options) => {
   }
 };
 
+export default solicitud;
