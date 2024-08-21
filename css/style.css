@@ -59,12 +59,12 @@ header {
 }
 
 .submit i {
-    font-size: 24px; /* Ajusta el tamaño del ícono */
+    font-size: 24px; 
 }
 
-/* Estilos para el botón en el header */
+
 header .submit {
-    margin-left: auto; /* Empuja el botón al extremo derecho */
+    margin-left: auto; 
 }
 
 .cja-categoria {
@@ -148,6 +148,21 @@ button i {
     box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
 }
 
+input[type="text"],
+input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 2px solid var(--btn-color-select);
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 16px;
+    background-color: var(--color-blanco);
+    color: var(--color-letra);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
 .cja-contenido {
     position: relative;
     width: 70%;
@@ -171,6 +186,7 @@ button i {
     box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.3);
+    table-layout: auto;
 }
 
 .cja-tabla th, .cja-tabla td {

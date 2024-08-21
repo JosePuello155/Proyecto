@@ -1,6 +1,5 @@
 const isEmail = (event, elemento) => {
-  let expresion = /^[\w-._]+@[\w-]+\.(com)$/;
-  
+  let expresion = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
   if (expresion.test(elemento.value)) {
       elemento.classList.remove("error");
       elemento.classList.add("correcto");

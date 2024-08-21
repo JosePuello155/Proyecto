@@ -1,4 +1,4 @@
-/* Fondo del cuerpo con un degradado */
+
 body {
     background-image: linear-gradient(to top, #4180ab, #4587b4, #498ebd, #4d95c6, #519ccf, #61a5d5, #70aeda, #7fb7e0, #99c4e4, #b3d1e8, #cbdeec, #e4ebf0);
     font-family: 'Poppins', sans-serif;
@@ -11,26 +11,25 @@ body {
     min-height: 100vh;
 }
 
-/* Contenedor del formulario */
+
 .form-container {
     width: 100%;
     max-width: 500px;
     margin: 20px;
     padding: 20px;
-    background-color: #f4f9fc; /* Un color más claro para contraste */
+    background-color: #f4f9fc; 
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     opacity: 0.95;
 }
 
-/* Título del formulario */
 .form-container h2 {
     text-align: center;
     margin-bottom: 20px;
     color: #333;
 }
 
-/* Estilos para los grupos de formularios */
+
 .form-group {
     margin-bottom: 15px;
     display: flex;
@@ -43,7 +42,7 @@ body {
     margin-bottom: 5px;
     color: #333;
     width: 100%;
-    max-width: 400px; /* Asegura que las etiquetas no se extiendan demasiado */
+    max-width: 400px; 
     text-align: left;
 }
 
@@ -57,7 +56,39 @@ body {
     box-sizing: border-box; 
 }
 
-/* Estilos para los botones */
+select {
+    width: 100%; 
+    max-width: 400px; 
+    padding: 10px;
+    border: 2px solid #ddd; 
+    border-radius: 20px;
+    background-color: #fff; 
+    color: #333; 
+    font-size: 16px;
+    cursor: pointer;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
+}
+
+select:focus {
+    border-color: #007bff;
+    background-color: #f4f9fc;
+    outline: none;
+}
+
+
+option {
+    background-color: #fff;
+    color: #333;
+    padding: 10px;
+}
+
+option:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+
 .form-actions {
     display: flex;
     justify-content: space-between;
@@ -81,7 +112,7 @@ body {
     background-color: #0056b3;
 }
 
-/* Media queries para pantallas pequeñas */
+
 @media (max-width: 480px) {
     .form-actions {
         flex-direction: column;

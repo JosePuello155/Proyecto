@@ -1,78 +1,141 @@
-import isEmail from './is_email.js';
-import is_letters from './is_letters.js';
-import is_number from './is_number.js';
-import is_valid from './is_valid.js';
+import isNumber from './is_number.js';
+import isLetters from './is_letters.js';
+import isValid from './is_valid.js';
 
-const dom = document;
+document.addEventListener('DOMContentLoaded', () => {
 
-// Selecciona el formulario y los elementos necesarios
-const form = dom.getElementById('registro-formulario');
-const documentInput = dom.getElementById('document');
-const nameInput = dom.getElementById('name');
-const numberInput = dom.getElementById('number');
-const addressInput = dom.getElementById('addres');
-const emailInput = dom.getElementById('email');
-const guardarBtn = dom.getElementById('guardar');
-const newBtn = dom.getElementById('new');
-const salirBtn = dom.getElementById('btn-salir');
+    const form = document.getElementById('registro-formulario');
+    const documentInput = document.getElementById('document');
+    const nameInput = document.getElementById('name');
+    const numberInput = document.getElementById('number');
+    const addressInput = document.getElementById('address');
+    const emailInput = document.getElementById('email');
+    const guardarBtn = document.getElementById('guardar');
+    const newBtn = document.getElementById('new');
+    
+    documentInput.addEventListener('keypress', isNumber);
+    numberInput.addEventListener('keypress', isNumber);
+    nameInput.addEventListener('input', isLetters);
+    emailInput.addEventListener('input', () => {
+        
+        if (!validateEmail(emailInput.value.trim())) {
+            emailInput.classList.add('error');
+        } else {
+            emailInput.classList.remove('error');
+            emailInput.classList.add('correcto');
+        }
+    });
 
-// Asociar validaciones en tiempo real
-nameInput.addEventListener('input', is_letters);
-documentInput.addEventListener('input', is_number);
-numberInput.addEventListener('input', is_number);
-emailInput.addEventListener('input', () => isEmail(null, emailInput));
+  
+    newBtn.addEventListener('click', () => {
+        form.reset();
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.classList.remove('error', 'correcto');
+        });
+    });
 
-// Manejar la acción de guardar
-guardarBtn.addEventListener('click', (event) => {
-    event.preventDefault(); // Evita el envío del formulario por defecto
 
-    // Validar el formulario antes de enviar
-    const formValid = is_valid(event, 'input');
-    if (formValid) {
+    const handleSave = async (event) => {
+        event.preventDefault();
+
+
+        if (!documentInput || !nameInput || !numberInput || !addressInput || !emailInput) {
+            console.error('Uno o más elementos del formulario son nulos.');
+            return;
+        }
+
+
+        const formValid = isValid(event, 'input') && !emailInput.classList.contains('error');
+        if (!formValid) {
+            alert('Por favor, completa todos los campos correctamente.');
+            return;
+        }
+
         const cliente = {
-            document: documentInput.value,
-            name: nameInput.value,
-            number: numberInput.value,
-            addres: addressInput.value,
-            email: emailInput.value
+            document: documentInput.value.trim(),
+            name: nameInput.value.trim(),
+            number: numberInput.value.trim(),
+            address: addressInput.value.trim(),
+            email: emailInput.value.trim(),
         };
 
-        // Enviar los datos a JSON Server
-        fetch('http://localhost:3000/clientes', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(cliente)
-        })
-        .then(response => response.json())
-        .then(data => {
-            alert('Cliente registrado con éxito');
-            form.reset(); // Limpiar el formulario después del registro
-            const inputs = document.querySelectorAll('input');
-            inputs.forEach(input => {
-                input.classList.remove('error', 'correcto'); // Limpia las clases de validación
-            });
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Hubo un problema al registrar el cliente');
-        });
-    } else {
-        alert('Por favor, completa todos los campos correctamente.');
-    }
-});
+        const urlParams = new URLSearchParams(window.location.search);
+        const clientId = urlParams.get("id");
 
-// Manejar la acción de "Nuevo" (limpiar el formulario)
-newBtn.addEventListener('click', () => {
-    form.reset();
-    const inputs = document.querySelectorAll('input');
-    inputs.forEach(input => {
-        input.classList.remove('error', 'correcto'); // Limpia las clases de validación
+        if (clientId) {
+
+            try {
+                await fetch(`http://localhost:3000/clientes/${clientId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(cliente)
+                });
+
+                alert('Cliente actualizado con éxito.');
+                window.location.href = "clientes.html"; 
+            } catch (error) {
+                console.error('Error al actualizar el cliente:', error);
+                alert('Hubo un problema al actualizar el cliente.');
+            }
+        } else {
+
+            try {
+                await fetch('http://localhost:3000/clientes', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(cliente)
+                });
+
+                alert('Cliente registrado con éxito.');
+                form.reset();
+            } catch (error) {
+                console.error('Error al registrar el cliente:', error);
+                alert('Hubo un problema al registrar el cliente.');
+            }
+        }
+    };
+
+
+    guardarBtn.addEventListener('click', handleSave);
+
+
+    document.addEventListener("DOMContentLoaded", async () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const clientId = urlParams.get("id");
+
+        if (clientId) {
+            try {
+                const response = await fetch(`http://localhost:3000/clientes/${clientId}`);
+                const cliente = await response.json();
+
+                if (documentInput) documentInput.value = cliente.document;
+                if (nameInput) nameInput.value = cliente.name;
+                if (numberInput) numberInput.value = cliente.number;
+                if (addressInput) addressInput.value = cliente.address;
+                if (emailInput) {
+                    emailInput.value = cliente.email;
+
+                    if (!validateEmail(cliente.email)) {
+                        emailInput.classList.add('error');
+                    } else {
+                        emailInput.classList.add('correcto');
+                    }
+                }
+            } catch (error) {
+                console.error("Error al cargar los datos del cliente:", error);
+            }
+        }
     });
 });
 
-// Manejar la acción de "Salir"
-salirBtn.addEventListener('click', () => {
-    window.location.href = '/inicio'; // Redirige a la página de inicio
-});
+
+function validateEmail(email) {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+}
+
