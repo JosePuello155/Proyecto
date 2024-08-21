@@ -44,18 +44,17 @@ const isCodigoRegistered = async (codigo) => {
 const handleSave = async (event) => {
     event.preventDefault();
 
-    
     const formValid = isValid(event, 'input');
     if (!formValid) {
         alert('Por favor, completa todos los campos correctamente.');
         return;
     }
 
-   
     const codigo = codigoInput.value.trim();
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get("id");
     const codigoRegistrado = await isCodigoRegistered(codigo);
-
-    if (codigoRegistrado) {
+    if (codigoRegistrado && !productId) {
         alert('El código del producto ya está registrado.');
         return;
     }
@@ -67,9 +66,6 @@ const handleSave = async (event) => {
         precio: precioInput.value.trim(),
         proveedor: proveedorSelect.value 
     };
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const productId = urlParams.get("id");
 
     if (productId) {
         
@@ -89,7 +85,6 @@ const handleSave = async (event) => {
             alert('Hubo un problema al actualizar el producto.');
         }
     } else {
-        
         try {
             await fetch('http://localhost:3000/productos', {
                 method: 'POST',
@@ -108,9 +103,7 @@ const handleSave = async (event) => {
     }
 };
 
-
 guardarBtn.addEventListener('click', handleSave);
-
 
 document.addEventListener("DOMContentLoaded", async () => {
     const urlParams = new URLSearchParams(window.location.search);

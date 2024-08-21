@@ -1,5 +1,6 @@
+import { URL } from "./config.js";
 document.addEventListener("DOMContentLoaded", () => {
-    const baseUrl = "http://localhost:3000"; 
+    const baseUrl = URL; 
     const tbody = document.querySelector(".cja-tabla tbody");
     async function fetchVentas() {
         try {
@@ -18,13 +19,30 @@ document.addEventListener("DOMContentLoaded", () => {
             venta.productos.forEach((producto, i) => {
                 const tr = document.createElement("tr");
 
-                tr.innerHTML = `
-                    <td>${index + 1}${i === 0 ? ` (${venta.id})` : ''}</td>
-                    <td>${producto.descripcion}</td>
-                    <td>${producto.cantidad}</td>
-                    <td>${producto.precio.toFixed(2)}</td>
-                    <td>${producto.total.toFixed(2)}</td>
-                `;
+                let td1 = document.createElement("td");
+                td1.textContent = index + 1;
+            if (i === 0) {
+                td1.textContent += " (" + venta.id + ")";
+            }
+
+            let td2 = document.createElement("td");
+            td2.textContent = producto.descripcion;
+
+            let td3 = document.createElement("td");
+            td3.textContent = producto.cantidad;
+
+            let td4 = document.createElement("td");
+            td4.textContent = producto.precio.toFixed(2);
+
+            let td5 = document.createElement("td");
+            td5.textContent = producto.total.toFixed(2);
+
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
+            tr.appendChild(td4);
+            tr.appendChild(td5);
+
 
                 tbody.appendChild(tr);
             });

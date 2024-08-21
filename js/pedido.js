@@ -1,5 +1,6 @@
+import { URL } from "./config.js";
 document.addEventListener("DOMContentLoaded", () => {
-    const baseUrl = "http://localhost:3000";  
+    const baseUrl = URL;  
 
     const codigoInput = document.getElementById("codigo");
     const descripcionInput = document.getElementById("descripcion");
@@ -37,37 +38,38 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    guardarBtn.addEventListener("click", () => {
+    guardarBtn.addEventListener("click", async () => {
         const codigo = codigoInput.value.trim();
         const descripcion = descripcionInput.value.trim();
         const cantidad = parseInt(cantidadInput.value.trim());
         const precio = parseFloat(precioInput.value.trim());
     
         if (codigo && descripcion && cantidad > 0 && precio > 0) {
-           
-            const productoExistente = productosPedido.find(producto => producto.codigo === codigo);
+            const producto = await fetchProductoByCodigo(codigo);
     
-            if (productoExistente) {
-               
-                productoExistente.cantidad += cantidad;
-                productoExistente.total = productoExistente.cantidad * productoExistente.precio;
-                
-                
-                actualizarFilaTabla(codigo, productoExistente.cantidad, productoExistente.total);
-            } else {
-               
-                const total = cantidad * precio;
-                totalPago += total;
+            if (producto && cantidad <= producto.stock) {
+                const productoExistente = productosPedido.find(producto => producto.codigo === codigo);
     
-                const nuevoProducto = { codigo, descripcion, cantidad, precio, total };
-                productosPedido.push(nuevoProducto);
-                agregarProductoTabla(codigo, descripcion, cantidad, precio, total);
+                if (productoExistente) {
+                    productoExistente.cantidad += cantidad;
+                    productoExistente.total = productoExistente.cantidad * productoExistente.precio;
+    
+                    actualizarFilaTabla(codigo, productoExistente.cantidad, productoExistente.total);
+                } else {
+                    const total = cantidad * precio;
+                    totalPago += total;
+    
+                    const nuevoProducto = { codigo, descripcion, cantidad, precio, total };
+                    productosPedido.push(nuevoProducto);
+                    agregarProductoTabla(codigo, descripcion, cantidad, precio, total);
+                }
+    
+                totalPagoInput.value = totalPago.toFixed(2);
+                limpiarFormulario();
+                codigoInput.focus();
+            } else { 
+                alert(`Stock insuficiente para el producto ${descripcion}. Solo quedan ${producto ? producto.stock : 0} unidades disponibles.`);
             }
-    
-            
-            totalPagoInput.value = totalPago.toFixed(2);
-            limpiarFormulario();
-            codigoInput.focus();
         } else {
             alert("Por favor, completa todos los campos correctamente antes de guardar.");
         }
