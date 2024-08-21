@@ -45,50 +45,54 @@ document.addEventListener('DOMContentLoaded', async () => {
             alert('Por favor, completa todos los campos correctamente.');
             return;
         }
-        const cliente = {
-            document: documentInput.value.trim(),
-            name: nameInput.value.trim(),
-            number: numberInput.value.trim(),
-            addres: addressInput.value.trim(),
-            email: emailInput.value.trim(),
-        };
+        if(/^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/.test(emailInput.value)){
+            const cliente = {
+                document: documentInput.value.trim(),
+                name: nameInput.value.trim(),
+                number: numberInput.value.trim(),
+                addres: addressInput.value.trim(),
+                email: emailInput.value.trim(),
+            };
+            const urlParams = new URLSearchParams(window.location.search);
+            const clientId = urlParams.get("id");
 
-        const urlParams = new URLSearchParams(window.location.search);
-        const clientId = urlParams.get("id");
-
-        if (clientId) {
-            try {
-                await fetch(`http://localhost:3000/clientes/${clientId}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(cliente)
-                });
-
-                alert('Cliente actualizado con éxito.');
-                window.location.href = "clientes.html"; 
-            } catch (error) {
-                console.error('Error al actualizar el cliente:', error);
-                alert('Hubo un problema al actualizar el cliente.');
-            }
-        } else {
-            try {
-                await fetch('http://localhost:3000/clientes', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(cliente)
-                });
-
-                alert('Cliente registrado con éxito.');
-                form.reset();
-            } catch (error) {
-                console.error('Error al registrar el cliente:', error);
-                alert('Hubo un problema al registrar el cliente.');
+            if (clientId) {
+                try {
+                    await fetch(`http://localhost:3000/clientes/${clientId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(cliente)
+                    });
+    
+                    alert('Cliente actualizado con éxito.');
+                    window.location.href = "clientes.html"; 
+                } catch (error) {
+                    console.error('Error al actualizar el cliente:', error);
+                    alert('Hubo un problema al actualizar el cliente.');
+                }
+            } else {
+                try {
+                    await fetch('http://localhost:3000/clientes', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(cliente)
+                    });
+                    alert('Cliente registrado con éxito.');
+                    form.reset();
+                } catch (error) {
+                    console.error('Error al registrar el cliente:', error);
+                    alert('Hubo un problema al registrar el cliente.');
+                }
             }
         }
+        else{
+            alert("Correo no valido");
+        }
+
     };
 
     guardarBtn.addEventListener('click', handleSave);
@@ -107,7 +111,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (addressInput) addressInput.value = cliente.addres;
             if (emailInput) {
                 emailInput.value = cliente.email;
-                if (!validateEmail(cliente.email)) {
+                if (!/^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/.test(cliente.email)) {
                     emailInput.classList.add('error');
                 } else {
                     emailInput.classList.add('correcto');
@@ -118,9 +122,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 });
-function validateEmail(email) {
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailPattern.test(email);
-}
+
 
 

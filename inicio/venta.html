@@ -12,26 +12,25 @@
     
     
 <body>
+    <header>
     <div class="cja-logo">
         <img  class="img-logo" src="/Imagenes/logo_login.svg">
         <h1>Papelería</h1>
     </div>
-
-    <div class="btn-salir">
-        <button><i class="fa-solid fa-arrow-right-from-bracket"></i></a>Salir</button>
-    </div>
-
-    <div class="cja-categoria">
+    <button type="button" id="btn-salir"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>Salir</button>
+</header>
+    <nav class="cja-categoria">
         <button onclick="location.href='/inicio/pedido.html'"><i class="fa-solid fa-cart-shopping"></i> Pedido</button>
         <button onclick="location.href='/inicio/clientes.html'"><i class="fa-solid fa-user-group "></i>Clientes</button>
         <button onclick="location.href='/inicio/proveedor.html'"><i class="fa-solid fa-user-tie "></i>Proveedor</button>
         <button onclick="location.href='/inicio/producto.html'"><i class="fa-solid fa-box-open "></i>Producto</button>
         <button onclick="location.href='/inicio/venta.html'"><i class="fa-regular fa-clipboard "></i>Ventas</button>
-    </div>
+    </nav>
 
-    <div class="cja-contenido">
+    <main>
+    <section class="cja-contenido">
         <h1>Ventas</h1>
-            <div class="cja-tabla">
+            <aside class="cja-tabla">
                 <table>
                     <thead>
                         <tr>
@@ -46,9 +45,9 @@
                         
                     </tbody>
                 </table>
-            </div>               
-        </div>
-    </div>
+            </aside>               
+        </section>
+    </main>
     <script type="module" src="../js/venta.js"></script>
     
 </body>

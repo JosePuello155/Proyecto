@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     nameInput.addEventListener('input', isLetters);
     emailInput.addEventListener('input', () => {
         
-        if (!validateEmail(emailInput.value.trim())) {
+        if (!/^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/.test(emailInput.value.trim())) {
             emailInput.classList.add('error');
         } else {
             emailInput.classList.remove('error');
@@ -39,59 +39,57 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.error('Uno o más elementos del formulario son nulos.');
             return;
         }
-
         const formValid = isValid(event, 'input') && !emailInput.classList.contains('error');
         if (!formValid) {
             alert('Por favor, completa todos los campos correctamente.');
             return;
         }
-
-        const proveedor = {
-            document: documentInput.value.trim(),
-            name: nameInput.value.trim(),
-            number: numberInput.value.trim(),
-            addres: addressInput.value.trim(),
-            email: emailInput.value.trim(),
+        if(!/^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/.test(emailInput.value)){
+            const proveedor = {
+                document: documentInput.value.trim(),
+                name: nameInput.value.trim(),
+                number: numberInput.value.trim(),
+                addres: addressInput.value.trim(),
+                email: emailInput.value.trim(),
+            };
+            const urlParams = new URLSearchParams(window.location.search);
+            const proveedorId = urlParams.get("id");
+        
+            if (proveedorId) {
+                try {
+                    await fetch(`http://localhost:3000/proveedores/${proveedorId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(proveedor)
+                    });
+                    alert('Proveedor actualizado con éxito.');
+                    window.location.href = "proveedores.html"; 
+                } catch (error) {
+                    console.error('Error al actualizar el proveedor:', error);
+                    alert('Hubo un problema al actualizar el proveedor.');
+                }
+            } else {
+                try {
+                    await fetch('http://localhost:3000/proveedores', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(proveedor)
+                    });
+                    alert('Proveedor registrado con éxito.');
+                    form.reset();
+                } catch (error) {
+                    console.error('Error al registrar el proveedor:', error);
+                    alert('Hubo un problema al registrar el proveedor.');
+                }
+            }
+        } else{
+        alert("Correo no valido");
         };
-
-        const urlParams = new URLSearchParams(window.location.search);
-        const proveedorId = urlParams.get("id");
-
-        if (proveedorId) {
-            try {
-                await fetch(`http://localhost:3000/proveedores/${proveedorId}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(proveedor)
-                });
-
-                alert('Proveedor actualizado con éxito.');
-                window.location.href = "proveedores.html"; 
-            } catch (error) {
-                console.error('Error al actualizar el proveedor:', error);
-                alert('Hubo un problema al actualizar el proveedor.');
-            }
-        } else {
-            try {
-                await fetch('http://localhost:3000/proveedores', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(proveedor)
-                });
-
-                alert('Proveedor registrado con éxito.');
-                form.reset();
-            } catch (error) {
-                console.error('Error al registrar el proveedor:', error);
-                alert('Hubo un problema al registrar el proveedor.');
-            }
-        }
     };
-
     guardarBtn.addEventListener('click', handleSave);
 
     const urlParams = new URLSearchParams(window.location.search);
@@ -108,7 +106,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (addressInput) addressInput.value = proveedor.addres;
             if (emailInput) {
                 emailInput.value = proveedor.email;
-                if (!validateEmail(proveedor.email)) {
+                if (/^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/.test(proveedor.email)) {
                     emailInput.classList.add('error');
                 } else {
                     emailInput.classList.add('correcto');
@@ -119,7 +117,4 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 });
-function validateEmail(email) {
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailPattern.test(email);
-}
+

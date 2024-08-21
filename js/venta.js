@@ -64,6 +64,17 @@ document.addEventListener("DOMContentLoaded", () => {
         const ventas = await fetchVentas();
         listarVentas(ventas);
     }
+    const btnSalir = document.getElementById("btn-salir");
+    if (btnSalir) {
+        btnSalir.addEventListener("click", () => {
+            const confirmacion = confirm("¿Estás seguro de que deseas cerrar sesión?");
+            if (confirmacion) {
+                window.location.href = "/index.html"; 
+            }
+        });
+    } else {
+        console.error("No se encontró el botón de cerrar sesión.");
+    }
 
     init();
 });
