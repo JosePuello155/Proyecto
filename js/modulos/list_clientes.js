@@ -1,7 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
     const tbody = document.querySelector("tbody");
-
-    // Función para obtener y renderizar los clientes
     const fetchClientes = async () => {
         try {
             const response = await fetch("http://localhost:3000/clientes");
@@ -11,13 +9,10 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("Error al obtener los clientes:", error);
         }
     };
-
-    // Renderizar los clientes en la tabla
     const renderClientes = (clientes) => {
-        tbody.innerHTML = ""; // Limpiar la tabla antes de renderizar
+        tbody.innerHTML = ""; 
         clientes.forEach((cliente) => {
             const tr = document.createElement("tr");
-
             tr.innerHTML = `
                 <td>${cliente.document}</td>
                 <td>${cliente.name}</td>
@@ -29,11 +24,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     <button class="eliminar-btn" data-id="${cliente.id}">Eliminar</button>
                 </td>
             `;
-
             tbody.appendChild(tr);
         });
 
-        // Añadir eventos a los botones de eliminar y editar
         document.querySelectorAll(".eliminar-btn").forEach(button => {
             button.addEventListener("click", eliminarCliente);
         });
@@ -43,26 +36,29 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    // Función para eliminar un cliente
     const eliminarCliente = async (event) => {
         const id = event.target.dataset.id;
-
         try {
             await fetch(`http://localhost:3000/clientes/${id}`, {
                 method: "DELETE",
             });
-            fetchClientes(); // Recargar la lista después de eliminar
+            fetchClientes(); 
         } catch (error) {
             console.error("Error al eliminar el cliente:", error);
         }
     };
 
-    // Función para redirigir al formulario de edición con los datos del cliente
     const editarCliente = async (event) => {
         const id = event.target.dataset.id;
         window.location.href = `registrar_clientes.html?id=${id}`;
     };
     
-    // Iniciar obteniendo los clientes
+    const btnSalir = document.getElementById("btn-salir");
+    btnSalir.addEventListener("click", () => {
+        const confirmacion = confirm("¿Estás seguro de que deseas cerrar sesión?");
+        if (confirmacion) {
+            window.location.href = "/index.html";
+        }
+    });
     fetchClientes();
 });

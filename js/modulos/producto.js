@@ -10,12 +10,12 @@ const proveedorSelect = document.getElementById('proveedor');
 const guardarBtn = document.getElementById('guardar');
 const newBtn = document.getElementById('new');
 
-// Asociar validaciones en tiempo real
+
 codigoInput.addEventListener('keypress', isNumber);
 stockInput.addEventListener('keypress', isNumber);
 precioInput.addEventListener('keypress', isNumber);
 
-// Manejar la acción de "Nuevo" (limpiar el formulario)
+
 newBtn.addEventListener('click', () => {
     form.reset();
     const inputs = document.querySelectorAll('input');
@@ -25,7 +25,7 @@ newBtn.addEventListener('click', () => {
     proveedorSelect.selectedIndex = 0;
 });
 
-// Función para verificar si el código ya está registrado
+
 const isCodigoRegistered = async (codigo) => {
     try {
         const response = await fetch(`http://localhost:3000/productos?codigo=${codigo}`);
@@ -40,18 +40,18 @@ const isCodigoRegistered = async (codigo) => {
     }
 };
 
-// Función para manejar la acción de guardar
+
 const handleSave = async (event) => {
     event.preventDefault();
 
-    // Validar el formulario
+    
     const formValid = isValid(event, 'input');
     if (!formValid) {
         alert('Por favor, completa todos los campos correctamente.');
         return;
     }
 
-    // Verificar si el código ya está registrado
+   
     const codigo = codigoInput.value.trim();
     const codigoRegistrado = await isCodigoRegistered(codigo);
 
@@ -65,14 +65,14 @@ const handleSave = async (event) => {
         name: nameInput.value.trim(),
         stock: stockInput.value.trim(),
         precio: precioInput.value.trim(),
-        proveedor: proveedorSelect.value // Enviando el ID del proveedor
+        proveedor: proveedorSelect.value 
     };
 
     const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get("id");
 
     if (productId) {
-        // Actualizar un producto existente
+        
         try {
             await fetch(`http://localhost:3000/productos/${productId}`, {
                 method: 'PUT',
@@ -89,7 +89,7 @@ const handleSave = async (event) => {
             alert('Hubo un problema al actualizar el producto.');
         }
     } else {
-        // Crear un nuevo producto
+        
         try {
             await fetch('http://localhost:3000/productos', {
                 method: 'POST',
@@ -108,10 +108,10 @@ const handleSave = async (event) => {
     }
 };
 
-// Asociar la función de guardar al botón
+
 guardarBtn.addEventListener('click', handleSave);
 
-// Cargar los datos del producto si estamos en modo de edición
+
 document.addEventListener("DOMContentLoaded", async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get("id");
@@ -121,18 +121,17 @@ document.addEventListener("DOMContentLoaded", async () => {
             const response = await fetch(`http://localhost:3000/productos/${productId}`);
             const producto = await response.json();
 
-            // Prellenar el formulario con los datos del producto
+           
             codigoInput.value = producto.codigo;
             nameInput.value = producto.name;
             stockInput.value = producto.stock;
             precioInput.value = producto.precio;
-            proveedorSelect.value = producto.proveedor; // Asegúrate de que este valor coincida con uno de los IDs de proveedor
+            proveedorSelect.value = producto.proveedor; 
         } catch (error) {
             console.error("Error al cargar los datos del producto:", error);
         }
     }
 
-    // Cargar proveedores en el combo box
     try {
         const response = await fetch('http://localhost:3000/proveedores');
         if (!response.ok) {
@@ -140,13 +139,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
         const proveedores = await response.json();
 
-        // Limpiar opciones existentes (si es necesario)
+ 
         proveedorSelect.innerHTML = '';
 
         proveedores.forEach(proveedor => {
             const option = document.createElement('option');
-            option.value = proveedor.id; // Usar el ID del proveedor como valor
-            option.textContent = proveedor.name; // Usar el nombre del proveedor como texto visible
+            option.value = proveedor.id; 
+            option.textContent = proveedor.name; 
             proveedorSelect.appendChild(option);
         });
     } catch (error) {

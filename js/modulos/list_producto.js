@@ -1,18 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     const tbody = document.querySelector("tbody");
-
-    // Función para obtener y renderizar los productos
     const fetchProductos = async () => {
         try {
-            // Obtener productos
+           
             const productosResponse = await fetch("http://localhost:3000/productos");
             const productos = await productosResponse.json();
 
-            // Obtener proveedores
             const proveedoresResponse = await fetch("http://localhost:3000/proveedores");
             const proveedores = await proveedoresResponse.json();
 
-            // Crear un mapa de proveedores para fácil acceso por ID
             const proveedoresMap = proveedores.reduce((map, proveedor) => {
                 map[proveedor.id] = proveedor.name;
                 return map;
@@ -24,9 +20,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // Renderizar los productos en la tabla
     const renderProductos = (productos, proveedoresMap) => {
-        tbody.innerHTML = ""; // Limpiar la tabla antes de renderizar
+        tbody.innerHTML = ""; 
         productos.forEach((producto) => {
             const tr = document.createElement("tr");
 
@@ -45,7 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
             tbody.appendChild(tr);
         });
 
-        // Añadir eventos a los botones de eliminar y editar
         document.querySelectorAll(".eliminar-btn").forEach(button => {
             button.addEventListener("click", eliminarProducto);
         });
@@ -55,7 +49,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    // Función para eliminar un producto
     const eliminarProducto = async (event) => {
         const id = event.target.dataset.id;
 
@@ -63,19 +56,25 @@ document.addEventListener("DOMContentLoaded", () => {
             await fetch(`http://localhost:3000/productos/${id}`, {
                 method: "DELETE",
             });
-            fetchProductos(); // Recargar la lista después de eliminar
+            fetchProductos(); 
         } catch (error) {
             console.error("Error al eliminar el producto:", error);
         }
     };
 
-    // Función para redirigir al formulario de edición con los datos del producto
     const editarProducto = async (event) => {
         const id = event.target.dataset.id;
         window.location.href = `registrar_producto.html?id=${id}`;
     };
+    
+    const btnSalir = document.getElementById("btn-salir");
+    btnSalir.addEventListener("click", () => {
+        const confirmacion = confirm("¿Estás seguro de que deseas cerrar sesión?");
+        if (confirmacion) {
+            window.location.href = "/index.html";
+        }
+    });
 
-    // Iniciar obteniendo los productos y proveedores
     fetchProductos();
 });
 

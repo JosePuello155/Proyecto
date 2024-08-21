@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let totalPago = 0;
     let productosPedido = [];
 
-    // Autocompletar cuando se presiona "Enter" en el campo de código
+    
     codigoInput.addEventListener("keypress", async (e) => {
         if (e.key === "Enter") {
             const codigo = codigoInput.value.trim();
@@ -44,18 +44,18 @@ document.addEventListener("DOMContentLoaded", () => {
         const precio = parseFloat(precioInput.value.trim());
     
         if (codigo && descripcion && cantidad > 0 && precio > 0) {
-            // Buscar si el producto ya existe en productosPedido
+           
             const productoExistente = productosPedido.find(producto => producto.codigo === codigo);
     
             if (productoExistente) {
-                // Si el producto ya existe, actualiza la cantidad y el total
+               
                 productoExistente.cantidad += cantidad;
                 productoExistente.total = productoExistente.cantidad * productoExistente.precio;
                 
-                // Actualizar la fila correspondiente en la tabla
+                
                 actualizarFilaTabla(codigo, productoExistente.cantidad, productoExistente.total);
             } else {
-                // Si el producto no existe, agregarlo a la lista y a la tabla
+               
                 const total = cantidad * precio;
                 totalPago += total;
     
@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 agregarProductoTabla(codigo, descripcion, cantidad, precio, total);
             }
     
-            // Actualizar el total del pago
+            
             totalPagoInput.value = totalPago.toFixed(2);
             limpiarFormulario();
             codigoInput.focus();
@@ -79,11 +79,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const codigoFila = fila.querySelector("td:first-child").textContent;
     
             if (codigoFila === codigo) {
-                // Actualizar la cantidad y el total en la fila
+                
                 fila.querySelector("td:nth-child(3)").textContent = nuevaCantidad;
                 fila.querySelector("td:nth-child(5)").textContent = nuevoTotal.toFixed(2);
     
-                // Actualizar el total general
+                
                 totalPago += nuevoTotal - parseFloat(fila.querySelector("td:nth-child(5)").textContent);
             }
         });
@@ -174,14 +174,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
     function eliminarProductoDeTabla(fila, total) {
-        // Elimina la fila de la tabla
+        
         fila.remove();
     
-        // Actualiza el total del pago
+        
         totalPago -= total;
         totalPagoInput.value = totalPago.toFixed(2);
     
-        // Elimina el producto de la lista de productosPedido
+        
         const codigo = fila.querySelector('td:first-child').textContent;
         productosPedido = productosPedido.filter(producto => producto.codigo !== codigo);
     }
@@ -206,4 +206,11 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("Hubo un problema al actualizar el stock del producto. Inténtalo de nuevo.");
         }
     }
+    const btnSalir = document.getElementById("btn-salir");
+    btnSalir.addEventListener("click", () => {
+        const confirmacion = confirm("¿Estás seguro de que deseas cerrar sesión?");
+        if (confirmacion) {
+            window.location.href = "/index.html";
+        }
+    });
 });

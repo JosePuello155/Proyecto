@@ -23,8 +23,9 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px; /* Ajusta el espaciado según tus necesidades */
+    padding: 20px; 
     position: relative;
+    z-index: 1000;
 }
 
 .cja-logo {

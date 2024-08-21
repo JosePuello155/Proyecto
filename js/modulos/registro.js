@@ -1,38 +1,41 @@
+import is_letters from "./is_letters";
+
 document.getElementById('registro-formulario').addEventListener('submit', async function(e) {
     e.preventDefault();
 
     const nombre = document.getElementById('nombre').value.trim();
     const correo = document.getElementById('correo').value.trim();
     const contraseña = document.getElementById('contraseña').value.trim();
-
-    // Resetear errores anteriores
     document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
     document.querySelectorAll('.success').forEach(el => el.classList.remove('success'));
 
     let formIsValid = true;
-
-    // Validaciones
-    if (nombre === "") {
+    if (nombre === "" || !is_letters(nombre)){
         document.getElementById('nombre').classList.add('error');
         formIsValid = false;
+        alert("El nombre solo debe tener letras no numeros");
+        
     }
-
     if (!validateEmail(correo)) {
         document.getElementById('correo').classList.add('error');
         formIsValid = false;
+        if (!correo.includes('@')) {
+            alert("El correo debe contener un '@'.");
+        } else if (!correo.includes('.')) {
+            alert("El correo debe contener un punto ('.').");
+        } else {
+            alert("Por favor, ingrese un correo válido.");
+        }
     }
-
-    if (contraseña.length < 0) { 
+    if (contraseña.length === 0) { 
         document.getElementById('contraseña').classList.add('error');
         formIsValid = false;
     }
-
     if (!formIsValid) {
         alert("Por favor, complete todos los campos correctamente.");
         return;
     }
 
-    // Verificar si el correo ya está registrado
     const verificarRegistro = async () => {
         try {
             const responseCorreo = await fetch(`http://localhost:3000/usuarios?correo=${encodeURIComponent(correo)}`);
@@ -82,7 +85,7 @@ document.getElementById('registro-formulario').addEventListener('submit', async 
     }
 });
 
-// Función para validar el formato del correo electrónico
+
 function validateEmail(email) {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailPattern.test(email);
