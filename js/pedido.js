@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     agregarProductoTabla(codigo, descripcion, cantidad, precio, total);
                 }
 
-                totalPagoInput.value = totalPago.toFixed(2);
+                totalPagoInput.value = totalPago.toFixed(1);
                 limpiarFormulario();
                 codigoInput.focus();
             } else { 

@@ -37,9 +37,6 @@ document.addEventListener("DOMContentLoaded", () => {
             let td5 = document.createElement("td");
             td5.textContent = producto.total.toFixed(2);
 
-            let td6 = document.createElement("td");
-            td6.textContent = venta.dineroRecibo;
-
             tr.appendChild(td1);
             tr.appendChild(td2);
             tr.appendChild(td3);
