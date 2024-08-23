@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             alert('Por favor, completa todos los campos correctamente.');
             return;
         }
-        if(!/^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/.test(emailInput.value)){
+        if(/^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/.test(emailInput.value)){
             const proveedor = {
                 document: documentInput.value.trim(),
                 name: nameInput.value.trim(),
@@ -86,9 +86,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                     alert('Hubo un problema al registrar el proveedor.');
                 }
             }
-        } else{
-        alert("Correo no valido");
-        };
+        } 
+        else{
+            alert("Correo no valido");
+        }
     };
     guardarBtn.addEventListener('click', handleSave);
 
@@ -106,7 +107,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (addressInput) addressInput.value = proveedor.addres;
             if (emailInput) {
                 emailInput.value = proveedor.email;
-                if (/^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/.test(proveedor.email)) {
+                if (!/^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/.test(proveedor.email)) {
                     emailInput.classList.add('error');
                 } else {
                     emailInput.classList.add('correcto');

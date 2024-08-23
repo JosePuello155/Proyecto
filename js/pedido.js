@@ -1,12 +1,14 @@
 import { URL } from "./config.js";
 document.addEventListener("DOMContentLoaded", () => {
+    
     const baseUrl = URL;  
-
     const codigoInput = document.getElementById("codigo");
     const descripcionInput = document.getElementById("descripcion");
     const cantidadInput = document.getElementById("cantidad");
     const precioInput = document.getElementById("precio");
     const totalPagoInput = document.getElementById("total-pago");
+    const dineroReciboInput = document.getElementById("dinero-recibo");
+    const cambioInput = document.getElementById("cambio");
     const guardarBtn = document.getElementById("guardar");
     const pagarBtn = document.getElementById("pagar");
 
@@ -92,20 +94,29 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     pagarBtn.addEventListener("click", async () => {
-        if (productosPedido.length > 0) {
-            const pedido = { productos: productosPedido, totalPago };
-            await guardarPedido(pedido);
+        const dineroRecibido = parseFloat(dineroRecibidoInput.value.trim());
 
-            for (let producto of productosPedido) {
-                await actualizarStockProducto(producto.codigo, producto.cantidad);
+        if (dineroRecibido >= totalPago) {
+            const cambio = dineroRecibido - totalPago;
+            cambioInput.value = cambio.toFixed(2);
+
+            if (productosPedido.length > 0) {
+                const pedido = { productos: productosPedido, totalPago };
+                await guardarPedido(pedido);
+
+                for (let producto of productosPedido) {
+                    await actualizarStockProducto(producto.codigo, producto.cantidad);
+                }
+
+                productosPedido = [];
+                totalPago = 0;
+                totalPagoInput.value = "0.00";
+                limpiarTabla();
+            } else {
+                alert("No hay productos en el pedido. Agrega productos antes de pagar.");
             }
-
-            productosPedido = [];
-            totalPago = 0;
-            totalPagoInput.value = "0.00";
-            limpiarTabla();
         } else {
-            alert("No hay productos en el pedido. Agrega productos antes de pagar.");
+            alert("El dinero recibido es insuficiente para cubrir el total del pago.");
         }
     });
 

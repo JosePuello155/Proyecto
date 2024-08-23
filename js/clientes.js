@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     nameInput.addEventListener('input', isLetters);
     emailInput.addEventListener('input', () => {
         
-        if (!validateEmail(emailInput.value.trim())) {
+        if (!/^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/.test(emailInput.value.trim())) {
             emailInput.classList.add('error');
         } else {
             emailInput.classList.remove('error');

@@ -47,7 +47,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const eliminarProveedor = async (event) => {
         const id = event.currentTarget.dataset.id;
+        const confirmacion = confirm("¿Estas se guro que quiere3s eliminar este proveedor?")
+        if (!confirmacion) return
         try {
+            await eliminarProveedorproducto(id)
             await fetch(`http://localhost:3000/proveedores/${id}`, {
                 method: "DELETE",
             });
@@ -56,6 +59,28 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("Error al eliminar el proveedor:", error);
         }
     };
+
+    const eliminarProveedorproducto = async (proveedorId) => { 
+        try {
+            //Vamos a obtener los producto
+            const productos = await fetch("http://localhost:3000/productos")
+            const producto = await productos.json()
+
+            //Hacemos un filtro para buscar los productos que tengan el id del proveedor a eliminar
+            const productosProveedores = producto.filter(p => p.proveedor === proveedorId)
+            
+            //Si hay productos con este proveedor, los eliminamos
+            for(const p of productosProveedores) {
+                await fetch(`http://localhost:3000/productos/${p.id}`, {
+                    method: "DELETE",
+                });
+            }
+        } catch (error) {
+            console.error("Error al eliminar los productos del proveedor:", error);
+            }
+        }
+
+
 
     const editarProveedor = (event) => {
         const id = event.currentTarget.dataset.id;
