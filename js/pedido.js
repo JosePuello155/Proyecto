@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const cantidadInput = document.getElementById("cantidad");
     const precioInput = document.getElementById("precio");
     const totalPagoInput = document.getElementById("total-pago");
-    const dineroReciboInput = document.getElementById("dinero-recibo");
+    const dineroReciboInput = document.getElementById("dinero-recibido");
     const cambioInput = document.getElementById("cambio");
     const guardarBtn = document.getElementById("guardar");
     const pagarBtn = document.getElementById("pagar");
@@ -40,32 +40,47 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    dineroReciboInput.addEventListener("keypress", async (e) => {
+        if  (e.key === "Enter"){
+            const dineroRecibo = parseFloat(dineroReciboInput.value.trim());
+
+            if (dineroRecibo >= totalPago) {
+                const cambio = dineroRecibo - totalPago;
+                cambioInput.value = cambio.toFixed(2);
+        }else {
+            alert("El dinero recibido es insuficiente para cubrir el total del pago.");
+        }
+    }
+    });
+
     guardarBtn.addEventListener("click", async () => {
         const codigo = codigoInput.value.trim();
         const descripcion = descripcionInput.value.trim();
         const cantidad = parseInt(cantidadInput.value.trim());
         const precio = parseFloat(precioInput.value.trim());
-    
+
+
         if (codigo && descripcion && cantidad > 0 && precio > 0) {
             const producto = await fetchProductoByCodigo(codigo);
-    
+
             if (producto && cantidad <= producto.stock) {
                 const productoExistente = productosPedido.find(producto => producto.codigo === codigo);
-    
+
                 if (productoExistente) {
                     productoExistente.cantidad += cantidad;
                     productoExistente.total = productoExistente.cantidad * productoExistente.precio;
-    
+
                     actualizarFilaTabla(codigo, productoExistente.cantidad, productoExistente.total);
                 } else {
                     const total = cantidad * precio;
                     totalPago += total;
-    
+                    dineroReciboInput.value = total;
+
                     const nuevoProducto = { codigo, descripcion, cantidad, precio, total };
                     productosPedido.push(nuevoProducto);
                     agregarProductoTabla(codigo, descripcion, cantidad, precio, total);
                 }
-    
+
                 totalPagoInput.value = totalPago.toFixed(2);
                 limpiarFormulario();
                 codigoInput.focus();
@@ -76,47 +91,37 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("Por favor, completa todos los campos correctamente antes de guardar.");
         }
     });
-    function actualizarFilaTabla(codigo, nuevaCantidad, nuevoTotal) {
-        const filas = document.querySelectorAll(".cja-tabla tbody tr");
-    
-        filas.forEach((fila) => {
-            const codigoFila = fila.querySelector("td:first-child").textContent;
-    
-            if (codigoFila === codigo) {
-                
-                fila.querySelector("td:nth-child(3)").textContent = nuevaCantidad;
-                fila.querySelector("td:nth-child(5)").textContent = nuevoTotal.toFixed(2);
-    
-                
-                totalPago += nuevoTotal - parseFloat(fila.querySelector("td:nth-child(5)").textContent);
-            }
-        });
-    }
 
     pagarBtn.addEventListener("click", async () => {
-        const dineroRecibido = parseFloat(dineroRecibidoInput.value.trim());
+        if (dineroReciboInput.value !=""  )
+            if(dineroReciboInput.value >= totalPagoInput.value){
+                if (productosPedido.length > 0) {
+                    const pedido = { productos: productosPedido, totalPago };
+                    await guardarPedido(pedido);
+    
+                    for (let producto of productosPedido) {
+                        await actualizarStockProducto(producto.codigo, producto.cantidad);
+                    }
+    
+                    productosPedido = [];
+                    totalPago = 0;
+                    totalPagoInput.value = "0.00";
+                    if(cambioInput.value !== "0.00"){
+                        alert(`Son ${cambioInput.value} de cambio`)
+                    }
+                    limpiarTabla();
+                    limpiarpago()
 
-        if (dineroRecibido >= totalPago) {
-            const cambio = dineroRecibido - totalPago;
-            cambioInput.value = cambio.toFixed(2);
-
-            if (productosPedido.length > 0) {
-                const pedido = { productos: productosPedido, totalPago };
-                await guardarPedido(pedido);
-
-                for (let producto of productosPedido) {
-                    await actualizarStockProducto(producto.codigo, producto.cantidad);
+                } else {
+                    alert("No hay productos en el pedido. Agrega productos antes de pagar.");
                 }
-
-                productosPedido = [];
-                totalPago = 0;
-                totalPagoInput.value = "0.00";
-                limpiarTabla();
-            } else {
-                alert("No hay productos en el pedido. Agrega productos antes de pagar.");
+               
             }
-        } else {
-            alert("El dinero recibido es insuficiente para cubrir el total del pago.");
+            else{
+                alert("El dinero recibido es insuficiente para cubrir el total del pago.");
+            }
+        else{
+            alert("El dinero recibido no es valido")
         }
     });
 
@@ -151,11 +156,16 @@ document.addEventListener("DOMContentLoaded", () => {
         tbody.innerHTML = "";
     }
 
+    function limpiarpago(){
+        totalPagoInput.value = ""
+        dineroReciboInput.value = ""
+        cambioInput.value = ""
+    }
+
     async function fetchProductoByCodigo(codigo) {
         try {
             const response = await fetch(`${baseUrl}/productos?codigo=${codigo}`);
             const data = await response.json();
-            console.log(data);  
             return data.length > 0 ? data[0] : null;
         } catch (error) {
             console.error("Error al obtener el producto:", error);
@@ -186,15 +196,11 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("Hubo un problema al guardar el pedido. Inténtalo de nuevo.");
         }
     }
+
     function eliminarProductoDeTabla(fila, total) {
-        
         fila.remove();
-    
-        
         totalPago -= total;
         totalPagoInput.value = totalPago.toFixed(2);
-    
-        
         const codigo = fila.querySelector('td:first-child').textContent;
         productosPedido = productosPedido.filter(producto => producto.codigo !== codigo);
     }
@@ -219,6 +225,7 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("Hubo un problema al actualizar el stock del producto. Inténtalo de nuevo.");
         }
     }
+
     const btnSalir = document.getElementById("btn-salir");
     btnSalir.addEventListener("click", () => {
         const confirmacion = confirm("¿Estás seguro de que deseas cerrar sesión?");

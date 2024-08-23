@@ -37,6 +37,9 @@ document.addEventListener("DOMContentLoaded", () => {
             let td5 = document.createElement("td");
             td5.textContent = producto.total.toFixed(2);
 
+            let td6 = document.createElement("td");
+            td6.textContent = venta.dineroRecibo;
+
             tr.appendChild(td1);
             tr.appendChild(td2);
             tr.appendChild(td3);
@@ -51,6 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
             trTotal.innerHTML = `
                 <td colspan="4" style="text-align: right;"><strong>Total Venta:</strong></td>
                 <td><strong>${venta.totalPago.toFixed(2)}</strong></td>
+              
             `;
             tbody.appendChild(trTotal);
 
