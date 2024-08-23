@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function listarVentas(ventas) {
+        let totaT = 0;
         ventas.forEach((venta, index) => {
             venta.productos.forEach((producto, i) => {
                 const tr = document.createElement("tr");
@@ -35,8 +36,9 @@ document.addEventListener("DOMContentLoaded", () => {
             td4.textContent = producto.precio.toFixed(2);
 
             let td5 = document.createElement("td");
-            td5.textContent = producto.total.toFixed(2);
-
+            let precioP = producto.cantidad * producto.precio
+            td5.textContent =   precioP ;
+            totaT += precioP;    
             tr.appendChild(td1);
             tr.appendChild(td2);
             tr.appendChild(td3);
@@ -44,13 +46,14 @@ document.addEventListener("DOMContentLoaded", () => {
             tr.appendChild(td5);
 
 
-                tbody.appendChild(tr);
+            tbody.appendChild(tr);
             });
 
+            
             const trTotal = document.createElement("tr");
             trTotal.innerHTML = `
                 <td colspan="4" style="text-align: right;"><strong>Total Venta:</strong></td>
-                <td><strong>${venta.totalPago.toFixed(2)}</strong></td>
+                <td><strong>${totaT}</strong></td>
               
             `;
             tbody.appendChild(trTotal);

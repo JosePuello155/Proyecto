@@ -76,9 +76,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     totalPago += total;
                     dineroReciboInput.value = total;
 
-                    const nuevoProducto = { codigo, descripcion, cantidad, precio, total };
+                    const nuevoProducto = { codigo, descripcion, cantidad, precio };
                     productosPedido.push(nuevoProducto);
-                    agregarProductoTabla(codigo, descripcion, cantidad, precio, total);
+                    agregarProductoTabla(codigo, descripcion, cantidad, precio);
                 }
 
                 totalPagoInput.value = totalPago.toFixed(1);
@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (dineroReciboInput.value !=""  )
             if(dineroReciboInput.value >= totalPagoInput.value){
                 if (productosPedido.length > 0) {
-                    const pedido = { productos: productosPedido, totalPago };
+                    const pedido = { productos: productosPedido };
                     await guardarPedido(pedido);
     
                     for (let producto of productosPedido) {
@@ -134,7 +134,6 @@ document.addEventListener("DOMContentLoaded", () => {
             <td>${descripcion}</td>
             <td>${cantidad}</td>
             <td>${precio.toFixed(2)}</td>
-            <td>${total.toFixed(2)}</td>
             <td><button class="eliminar-btn">Eliminar</button></td>
         `;
 
