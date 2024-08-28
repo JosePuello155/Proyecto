@@ -15,8 +15,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function listarVentas(ventas) {
-        let totaT = 0;
+        
         ventas.forEach((venta, index) => {
+            let totaT = 0;
             venta.productos.forEach((producto, i) => {
                 const tr = document.createElement("tr");
 
@@ -38,7 +39,9 @@ document.addEventListener("DOMContentLoaded", () => {
             let td5 = document.createElement("td");
             let precioP = producto.cantidad * producto.precio
             td5.textContent =   precioP ;
+
             totaT += precioP;    
+
             tr.appendChild(td1);
             tr.appendChild(td2);
             tr.appendChild(td3);
